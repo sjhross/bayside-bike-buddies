@@ -13,14 +13,12 @@ function Dashboard() {
   const { user } = useAuth();
   // Initialize with starter trails so they are ALWAYS visible
   const [trails, setTrails] = useState(starterTrails);
-  const [loading, setLoading] = useState(true);
   const [errorEnv, setErrorEnv] = useState(null);
   const [filters, setFilters] = useState([]);
   const [search, setSearch] = useState('');
   const [isLodgeModalOpen, setIsLodgeModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
-  const [selectedTrail, setSelectedTrail] = useState(null);
 
   // Fetch trails from Supabase
   useEffect(() => {
@@ -29,7 +27,6 @@ function Dashboard() {
 
   async function fetchTrails() {
     try {
-      setLoading(true);
       setErrorEnv(null);
       const { data, error } = await supabase
         .from('trails')
@@ -53,8 +50,6 @@ function Dashboard() {
       console.error('Error fetching trails:', error);
       setErrorEnv(error.message || "Failed to connect to Supabase");
       // On error, we still have starterTrails in state, so we do nothing
-    } finally {
-      setLoading(false);
     }
   }
 
@@ -89,7 +84,6 @@ function Dashboard() {
   };
 
   const handleTrailSelect = (trail) => {
-    setSelectedTrail(trail);
     console.log("Selected:", trail.name);
   };
 
