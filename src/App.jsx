@@ -109,38 +109,54 @@ function Dashboard() {
         />
       </div>
 
-      {/* Map */}
-      <div className="w-full h-1/2 md:h-full md:flex-1 order-1 md:order-2 relative z-10">
-        <MapComponent
-          trails={filteredTrails}
-          onTrailSelect={handleTrailSelect}
+      return (
+      <div className="flex flex-col md:flex-row h-screen w-full overflow-hidden bg-slate-50 text-slate-900">
+        {/* Sidebar - Order 2 on mobile (bottom), Order 1 on desktop (left) */}
+        <div className="order-2 w-full flex-1 min-h-0 md:w-[400px] md:h-full md:flex-shrink-0 md:order-1 z-20 shadow-xl md:shadow-none relative">
+          <Sidebar
+            trails={filteredTrails}
+            onSearch={setSearch}
+            onFilter={toggleFilter}
+            selectedFilters={filters}
+            onLodgeClick={handleLodgeClick}
+            onTrailSelect={handleTrailSelect}
+            onAboutClick={() => setIsAboutModalOpen(true)}
+            error={errorEnv}
+          />
+        </div>
+
+        {/* Map - Order 1 on mobile (top), Order 2 on desktop (right) */}
+        <div className="order-1 w-full h-[40vh] md:h-full md:flex-1 md:order-2 relative z-10">
+          <MapComponent
+            trails={filteredTrails}
+            onTrailSelect={handleTrailSelect}
+          />
+        </div>
+
+        {/* Modals */}
+        <LodgeTrackModal
+          isOpen={isLodgeModalOpen}
+          onClose={() => setIsLodgeModalOpen(false)}
+          onSubmit={handleLodgeTrack}
+        />
+
+        <LoginModal
+          isOpen={isLoginModalOpen}
+          onClose={() => setIsLoginModalOpen(false)}
+        />
+
+        <AboutModal
+          isOpen={isAboutModalOpen}
+          onClose={() => setIsAboutModalOpen(false)}
         />
       </div>
-
-      {/* Modals */}
-      <LodgeTrackModal
-        isOpen={isLodgeModalOpen}
-        onClose={() => setIsLodgeModalOpen(false)}
-        onSubmit={handleLodgeTrack}
-      />
-
-      <LoginModal
-        isOpen={isLoginModalOpen}
-        onClose={() => setIsLoginModalOpen(false)}
-      />
-
-      <AboutModal
-        isOpen={isAboutModalOpen}
-        onClose={() => setIsAboutModalOpen(false)}
-      />
-    </div>
-  );
+      );
 }
 
-export default function App() {
+      export default function App() {
   return (
-    <AuthProvider>
-      <Dashboard />
-    </AuthProvider>
-  );
+      <AuthProvider>
+        <Dashboard />
+      </AuthProvider>
+      );
 }

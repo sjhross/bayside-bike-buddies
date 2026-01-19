@@ -2,8 +2,11 @@ import { useState } from 'react';
 import { Search, MapPin, Plus, Bike, Info } from 'lucide-react';
 import { difficultyLevels } from '../data/trails';
 
+import LevelGuideModal from './LevelGuideModal';
+
 const Sidebar = ({ trails, onSearch, onFilter, selectedFilters, onLodgeClick, onTrailSelect, onAboutClick, error }) => {
     const [searchTerm, setSearchTerm] = useState('');
+    const [isGuideOpen, setIsGuideOpen] = useState(false);
 
     const handleSearch = (e) => {
         const term = e.target.value;
@@ -54,7 +57,16 @@ const Sidebar = ({ trails, onSearch, onFilter, selectedFilters, onLodgeClick, on
 
                 {/* Filters */}
                 <div className="flex flex-wrap gap-2">
-                    <p className="w-full text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Filter by Difficulty</p>
+                    <div className="w-full flex items-center justify-between mb-1">
+                        <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Filter by Difficulty</p>
+                        <button
+                            onClick={() => setIsGuideOpen(true)}
+                            className="text-sky-600 hover:text-sky-700 text-xs font-semibold flex items-center gap-1 hover:underline"
+                        >
+                            <Info size={12} />
+                            Level Guide
+                        </button>
+                    </div>
                     {Object.entries(difficultyLevels).map(([level, info]) => {
                         const isSelected = selectedFilters.includes(parseInt(level));
                         return (
@@ -100,7 +112,7 @@ const Sidebar = ({ trails, onSearch, onFilter, selectedFilters, onLodgeClick, on
                             <p className="text-sm text-slate-500 leading-relaxed mb-3">{trail.description}</p>
                             <div className="flex items-center text-xs text-slate-400 font-medium">
                                 <MapPin size={14} className="mr-1" />
-                                <span>View on Map</span>
+                                <span className="text-slate-500">View on Map</span>
                             </div>
                         </div>
                     ))
@@ -117,6 +129,8 @@ const Sidebar = ({ trails, onSearch, onFilter, selectedFilters, onLodgeClick, on
                     Lodge a Track
                 </button>
             </div>
+
+            <LevelGuideModal isOpen={isGuideOpen} onClose={() => setIsGuideOpen(false)} />
         </div>
     );
 };

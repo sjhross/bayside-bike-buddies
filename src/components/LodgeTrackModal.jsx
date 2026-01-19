@@ -1,12 +1,14 @@
-import { X, Upload, Loader2 } from 'lucide-react';
+import { X, Upload, Loader2, Info } from 'lucide-react';
 import { difficultyLevels } from '../data/trails';
 import { useState } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import { useAuth } from '../contexts/AuthContext';
+import LevelGuideModal from './LevelGuideModal';
 
 const LodgeTrackModal = ({ isOpen, onClose, onSubmit }) => {
     const { user } = useAuth();
     const [loading, setLoading] = useState(false);
+    const [isGuideOpen, setIsGuideOpen] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
         level: 0,
@@ -16,9 +18,10 @@ const LodgeTrackModal = ({ isOpen, onClose, onSubmit }) => {
     });
     const [imageFile, setImageFile] = useState(null);
 
-    if (!isOpen) return null;
+    // ... (rest of the component logic)
 
     const handleSubmit = async (e) => {
+        // ... same submit logic
         e.preventDefault();
         if (!user) return; // Should allow guard at parent level, but safety check
 
@@ -77,6 +80,8 @@ const LodgeTrackModal = ({ isOpen, onClose, onSubmit }) => {
         }
     };
 
+    if (!isOpen) return null;
+
     return (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-in fade-in duration-200">
             <div className="bg-white rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
@@ -101,7 +106,17 @@ const LodgeTrackModal = ({ isOpen, onClose, onSubmit }) => {
                     </div>
 
                     <div>
-                        <label className="block text-sm font-semibold text-slate-700 mb-1">Difficulty Level</label>
+                        <div className="flex items-center justify-between mb-1">
+                            <label className="block text-sm font-semibold text-slate-700">Difficulty Level</label>
+                            <button
+                                type="button"
+                                onClick={() => setIsGuideOpen(true)}
+                                className="text-sky-600 hover:text-sky-700 text-xs font-semibold flex items-center gap-1 hover:underline"
+                            >
+                                <Info size={12} />
+                                Level Guide
+                            </button>
+                        </div>
                         <div className="relative">
                             <select
                                 className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500 appearance-none bg-white"
@@ -170,6 +185,8 @@ const LodgeTrackModal = ({ isOpen, onClose, onSubmit }) => {
                         </button>
                     </div>
                 </form>
+
+                <LevelGuideModal isOpen={isGuideOpen} onClose={() => setIsGuideOpen(false)} />
             </div>
         </div>
     );
