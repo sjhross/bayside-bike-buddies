@@ -1,9 +1,12 @@
 import { useState, useMemo, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MapComponent from './components/Map';
 import Sidebar from './components/Sidebar';
 import LodgeTrackModal from './components/LodgeTrackModal';
 import LoginModal from './components/LoginModal';
 import AboutModal from './components/AboutModal';
+import PrivacyPolicy from './components/PrivacyPolicy';
+import TermsOfService from './components/TermsOfService';
 import { supabase } from './lib/supabaseClient';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { trails as starterTrails } from './data/trails';
@@ -134,7 +137,13 @@ function Dashboard() {
 export default function App() {
   return (
     <AuthProvider>
-      <Dashboard />
+      <Router>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<TermsOfService />} />
+        </Routes>
+      </Router>
     </AuthProvider>
   );
 }

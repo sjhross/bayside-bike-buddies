@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Search, MapPin, Plus, Bike, Info } from 'lucide-react';
 import { difficultyLevels } from '../data/trails';
 
@@ -128,6 +129,11 @@ const Sidebar = ({ trails, onSearch, onFilter, selectedFilters, onLodgeClick, on
                     <Plus size={20} />
                     Lodge a Track
                 </button>
+                <div className="flex justify-center gap-4 mt-4 text-xs text-slate-400">
+                    <Link to="/privacy" className="hover:text-slate-600 transition-colors">Privacy Policy</Link>
+                    <span>•</span>
+                    <Link to="/terms" className="hover:text-slate-600 transition-colors">Terms of Service</Link>
+                </div>
             </div>
 
             <LevelGuideModal isOpen={isGuideOpen} onClose={() => setIsGuideOpen(false)} />
