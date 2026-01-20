@@ -64,7 +64,7 @@ function Dashboard() {
         trail.description.toLowerCase().includes(search.toLowerCase());
       const matchesFilter = filters.length === 0 || filters.includes(trail.level);
       return matchesSearch && matchesFilter;
-    });
+    }).sort((a, b) => a.level - b.level);
   }, [trails, filters, search]);
 
   const handleLodgeClick = () => {
