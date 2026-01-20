@@ -7,6 +7,7 @@ import LoginModal from './components/LoginModal';
 import AboutModal from './components/AboutModal';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import TermsOfService from './components/TermsOfService';
+import AdminDashboard from './components/AdminDashboard';
 import { supabase } from './lib/supabaseClient';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { trails as starterTrails } from './data/trails';
@@ -142,6 +143,7 @@ export default function App() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<TermsOfService />} />
+          <Route path="/admin" element={<AdminDashboard />} />
         </Routes>
       </Router>
     </AuthProvider>
