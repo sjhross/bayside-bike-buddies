@@ -26,7 +26,15 @@ const LodgeTrackModal = ({ isOpen, onClose, onSubmit }) => {
         if (!query || query.length < 3) return;
         setIsSearching(true);
         try {
-            const provider = new OpenStreetMapProvider();
+            const provider = new OpenStreetMapProvider({
+                params: {
+                    'accept-language': 'en',
+                    countrycodes: 'au',
+                    viewbox: '144.5,-37.5,145.6,-38.5', // Approximate bounds for Melbourne/Mornington
+                    bounded: 1,
+                    addressdetails: 1,
+                }
+            });
             const results = await provider.search({ query });
             setSearchResults(results);
         } catch (error) {
