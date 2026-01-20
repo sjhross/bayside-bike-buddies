@@ -92,7 +92,8 @@ const LodgeTrackModal = ({ isOpen, onClose, onSubmit }) => {
                 lat: parseFloat(formData.lat),
                 lng: parseFloat(formData.lng),
                 image_url: imageUrl,
-                user_id: user.id
+                user_id: user.id,
+                contributor_email: user.email
             };
 
             const { data, error } = await supabase

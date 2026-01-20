@@ -100,6 +100,7 @@ const AdminDashboard = () => {
                             <thead className="bg-slate-50 border-b border-slate-100">
                                 <tr>
                                     <th className="p-4 text-sm font-semibold text-slate-600">Track Name</th>
+                                    <th className="p-4 text-sm font-semibold text-slate-600">Submitted By</th>
                                     <th className="p-4 text-sm font-semibold text-slate-600">Level</th>
                                     <th className="p-4 text-sm font-semibold text-slate-600">Status</th>
                                     <th className="p-4 text-sm font-semibold text-slate-600">Actions</th>
@@ -118,6 +119,9 @@ const AdminDashboard = () => {
                                             <td className="p-4 font-medium text-slate-800">
                                                 {trail.name}
                                                 <div className="text-xs text-slate-400 font-normal mt-0.5 truncate max-w-xs ">{trail.description}</div>
+                                            </td>
+                                            <td className="p-4 text-sm text-slate-600">
+                                                {trail.contributor_email || <span className="italic text-slate-400">Unknown</span>}
                                             </td>
                                             <td className="p-4">
                                                 <span
