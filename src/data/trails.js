@@ -1,6 +1,6 @@
 export const trails = [
     {
-        id: 1,
+        id: 'starter-1',
         name: "Ballam Park Basketball Courts, Frankston",
         level: 0,
         description: "Flat, zero traffic. Perfect for the very first time on a bike.",
@@ -8,7 +8,7 @@ export const trails = [
         lng: 145.1584,
     },
     {
-        id: 2,
+        id: 'starter-2',
         name: "Bicentennial Park paths, Chelsea",
         level: 1,
         description: "Flat, paved/hard surface. Safe for a kid on a bike and a sibling on a scooter.",
@@ -16,7 +16,7 @@ export const trails = [
         lng: 145.1264,
     },
     {
-        id: 3,
+        id: 'starter-3',
         name: "Seaford Wetlands Trail",
         level: 2,
         description: "Fine for most, but introduces gentle undulations that might tire little legs.",
@@ -24,7 +24,7 @@ export const trails = [
         lng: 145.1331,
     },
     {
-        id: 4,
+        id: 'starter-4',
         name: "George Pentland Botanic Gardens",
         level: 3,
         description: "Challenging trails, internal loop with hills to test their skills.",
@@ -32,7 +32,7 @@ export const trails = [
         lng: 145.1287,
     },
     {
-        id: 5,
+        id: 'starter-5',
         name: "Peninsula Link Trail (Baxter)",
         level: 4,
         description: "High effort for both parents and kids. Expect sweat and breaks!",
