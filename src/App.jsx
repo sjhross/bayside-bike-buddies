@@ -140,9 +140,9 @@ export default function App() {
   return (
     <AuthProvider>
       <Router>
+        <GoogleAnalytics />
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <GoogleAnalytics />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<TermsOfService />} />
           <Route path="/admin" element={<AdminDashboard />} />
