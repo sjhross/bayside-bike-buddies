@@ -45,7 +45,7 @@ const AboutModal = ({ isOpen, onClose }) => {
                     </div>
 
                     <div className="mt-6 pt-6 border-t border-slate-100 text-sm text-slate-500 text-left">
-                        <p className="font-medium text-slate-700">Ideas or want to sponsor it?</p>
+                        <p className="font-medium text-slate-700">Ideas or questions?</p>
                         <a href="mailto:seanjhross@gmail.com" className="text-sky-600 hover:underline">seanjhross@gmail.com</a>
                     </div>
                 </div>
