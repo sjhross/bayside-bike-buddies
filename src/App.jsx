@@ -9,6 +9,7 @@ import PrivacyPolicy from './components/PrivacyPolicy';
 import TermsOfService from './components/TermsOfService';
 import AdminDashboard from './components/AdminDashboard';
 import GoogleAnalytics from './components/GoogleAnalytics';
+import SchemaMarkup from './components/SchemaMarkup';
 import { supabase } from './lib/supabaseClient';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { trails as starterTrails } from './data/trails';
@@ -141,6 +142,7 @@ export default function App() {
     <AuthProvider>
       <Router>
         <GoogleAnalytics />
+        <SchemaMarkup trails={starterTrails} />
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
