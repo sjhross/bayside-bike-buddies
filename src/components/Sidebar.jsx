@@ -16,7 +16,7 @@ const Sidebar = ({ trails, onSearch, onFilter, selectedFilters, onLodgeClick, on
     };
 
     return (
-        <div className="flex flex-col h-full bg-slate-50 border-r border-slate-200">
+        <div className="flex flex-col md:h-full bg-slate-50 border-r border-slate-200">
             {/* Header */}
             <div className="p-6 bg-white shadow-sm z-10">
                 <div className="flex items-center justify-between mb-6">
@@ -89,7 +89,7 @@ const Sidebar = ({ trails, onSearch, onFilter, selectedFilters, onLodgeClick, on
             </div>
 
             {/* List */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-3">
+            <div className="md:flex-1 md:overflow-y-auto p-4 space-y-3">
                 {trails.length === 0 ? (
                     <div className="text-center py-10 text-slate-400">
                         <p>No tracks found matching your criteria.</p>

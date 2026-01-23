@@ -34,7 +34,14 @@ const MapComponent = ({ trails, onTrailSelect }) => {
     };
 
     return (
-        <MapContainer center={center} zoom={11} style={{ height: '100%', width: '100%' }} zoomControl={false}>
+        <MapContainer
+            center={center}
+            zoom={11}
+            style={{ height: '100%', width: '100%' }}
+            zoomControl={false}
+            scrollWheelZoom={false}
+            dragging={!L.Browser.mobile}
+        >
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
