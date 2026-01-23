@@ -1,5 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
+import { BrowserRouter as Router, Routes, Route, useParams, useNavigate } from 'react-router-dom';
 import MapComponent from './components/Map';
 import Sidebar from './components/Sidebar';
 import LodgeTrackModal from './components/LodgeTrackModal';
@@ -10,6 +11,7 @@ import TermsOfService from './components/TermsOfService';
 import AdminDashboard from './components/AdminDashboard';
 import GoogleAnalytics from './components/GoogleAnalytics';
 import SchemaMarkup from './components/SchemaMarkup';
+import SEO from './components/SEO';
 import { supabase } from './lib/supabaseClient';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { trails as starterTrails } from './data/trails';
@@ -17,6 +19,9 @@ import './index.css';
 
 function Dashboard() {
   const { user } = useAuth();
+  const { trackId } = useParams(); // Get URL param
+  const navigate = useNavigate();
+
   // Initialize with starter trails so they are ALWAYS visible
   const [trails, setTrails] = useState(starterTrails);
   const [errorEnv, setErrorEnv] = useState(null);
@@ -25,6 +30,29 @@ function Dashboard() {
   const [isLodgeModalOpen, setIsLodgeModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
+
+  // Find active trail based on URL
+  const activeTrail = useMemo(() => {
+    if (!trackId) return null;
+    return trails.find(t =>
+      t.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') === trackId
+    );
+  }, [trackId, trails]);
+
+  // SEO Data
+  const seoData = activeTrail ? {
+    title: activeTrail.name,
+    description: activeTrail.description,
+    url: `/track/${trackId}`
+  } : {
+    title: "Family Track Finder",
+    description: "Find family-friendly bike tracks in Bayside & Mornington Peninsula. Rated by difficulty for kids of all ages.",
+    url: "/"
+  };
+
+  // Select trail logic - simpler version for URL load
+  // We can just log or highlight it. For now, we will rely on map click for explicit selection
+  // but we could auto-center map here if MapComponent supports it via props.
 
   // Fetch trails from Supabase
   useEffect(() => {
@@ -91,10 +119,18 @@ function Dashboard() {
 
   const handleTrailSelect = (trail) => {
     console.log("Selected:", trail.name);
+    // Navigate to unique URL
+    const slug = trail.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+    navigate(`/track/${slug}`);
   };
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen w-full overflow-y-auto md:h-screen md:overflow-hidden bg-slate-50 text-slate-900">
+      <SEO
+        title={seoData.title}
+        description={seoData.description}
+        url={seoData.url}
+      />
       {/* Sidebar - Order 2 on mobile (bottom), Order 1 on desktop (left) */}
       <div className="order-2 w-full flex-1 min-h-0 md:w-[400px] md:h-full md:flex-shrink-0 md:order-1 z-20 shadow-xl md:shadow-none relative">
         <Sidebar
@@ -139,17 +175,20 @@ function Dashboard() {
 
 export default function App() {
   return (
-    <AuthProvider>
-      <Router>
-        <GoogleAnalytics />
-        <SchemaMarkup trails={starterTrails} />
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/privacy" element={<PrivacyPolicy />} />
-          <Route path="/terms" element={<TermsOfService />} />
-          <Route path="/admin" element={<AdminDashboard />} />
-        </Routes>
-      </Router>
-    </AuthProvider>
+    <HelmetProvider>
+      <AuthProvider>
+        <Router>
+          <GoogleAnalytics />
+          <SchemaMarkup trails={starterTrails} />
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/track/:trackId" element={<Dashboard />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsOfService />} />
+            <Route path="/admin" element={<AdminDashboard />} />
+          </Routes>
+        </Router>
+      </AuthProvider>
+    </HelmetProvider>
   );
 }
